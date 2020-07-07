@@ -1,0 +1,39 @@
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+#include <Servo.h>
+Servo motor1; 
+Servo motor2; 
+
+int L1=9;
+int L2=5; 
+int x=8; 
+int y=5; 
+int Q=170; 
+
+float Q1,Q2,cQ2;  
+float q2,q1;
+
+void setup() {
+  
+  motor1.attach(9); 
+  motor2.attach(6); 
+  lcd.begin(16, 2);  
+}
+
+void loop() {
+  
+  cQ2=(pow(x,2)+pow(y,2)-pow(L1,2)-pow(L2,2))/(2*L1*L2); 
+  q2=acos(cQ2);
+  Q2=q2*180/PI;
+  Q1=Q-Q2;
+  lcd.print("first angle;");
+  lcd.print(Q1); 
+  lcd.setCursor(0,1);
+  lcd.print("second angle;");
+  lcd.print(Q2); 
+  Serial.print(Q1); 
+  motor1.write(Q1);
+  motor2.write(Q2);
+}
+ 
